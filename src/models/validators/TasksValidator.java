@@ -6,7 +6,7 @@ import java.util.List;
 import models.Tasks;
 
 public class TasksValidator {
-    // ƒoƒŠƒf[ƒVƒ‡ƒ“‚ğÀs‚·‚é
+    // ï¿½oï¿½ï¿½ï¿½fï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½
     public static List<String> validate(Tasks m) {
         List<String> errors = new ArrayList<String>();
 
@@ -18,10 +18,10 @@ public class TasksValidator {
         return errors;
     }
 
-    // ƒ^ƒXƒN‚Ì•K{“ü—Íƒ`ƒFƒbƒN
+    // ï¿½^ï¿½Xï¿½Nï¿½Ì•Kï¿½{ï¿½ï¿½ï¿½Íƒ`ï¿½Fï¿½bï¿½N
     private static String validateContent(String content) {
         if(content == null || content.equals("")) {
-            return "ƒ^ƒXƒN‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B";
+            return "ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚";
         }
 
         return "";
