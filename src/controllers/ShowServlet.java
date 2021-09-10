@@ -34,12 +34,10 @@ public class ShowServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		EntityManager em = DBUtil.createEntityManager();
 
-        // 該当のIDのタスク1件のみをデータベースから取得
         Tasks m = em.find(Tasks.class, Integer.parseInt(request.getParameter("id")));
 
         em.close();
 
-        // タスクデータをリクエストスコープにセットしてshow.jspを呼び出す
         request.setAttribute("tasks", m);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/show.jsp");

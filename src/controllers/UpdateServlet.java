@@ -21,7 +21,7 @@ import utils.DBUtil;
  */
 @WebServlet("/update")
 public class UpdateServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -31,30 +31,26 @@ public class UpdateServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String _token = request.getParameter("_token");
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String _token = request.getParameter("_token");
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            // ƒZƒbƒVƒ‡ƒ“ƒXƒR[ƒv‚©‚çƒƒbƒZ[ƒW‚ÌID‚ğæ“¾‚µ‚ÄŠY“–‚ÌID‚Ìƒ^ƒXƒN1Œ‚Ì‚İ‚ğƒf[ƒ^ƒx[ƒX‚©‚çæ“¾
             Tasks m = em.find(Tasks.class, (Integer)(request.getSession().getAttribute("tasks_id")));
 
-            // ƒtƒH[ƒ€‚Ì“à—e‚ğŠeƒtƒB[ƒ‹ƒh‚Éã‘‚«
             String content = request.getParameter("content");
             m.setContent(content);
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            m.setUpdated_at(currentTime);       // XV“ú‚Ì‚İã‘‚«
+            m.setUpdated_at(currentTime);
 
-         // ƒoƒŠƒf[ƒVƒ‡ƒ“‚ğÀs‚µ‚ÄƒGƒ‰[‚ª‚ ‚Á‚½‚ç•ÒW‰æ–Ê‚ÌƒtƒH[ƒ€‚É–ß‚é
             List<String> errors = TasksValidator.validate(m);
             if(errors.size() > 0) {
                 em.close();
 
-                // ƒtƒH[ƒ€‚É‰Šú’l‚ğİ’èA‚³‚ç‚ÉƒGƒ‰[ƒƒbƒZ[ƒW‚ğ‘—‚é
                 request.setAttribute("_token", request.getSession().getId());
                 request.setAttribute("tasks", m);
                 request.setAttribute("errors", errors);
@@ -62,16 +58,13 @@ public class UpdateServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/edit.jsp");
                 rd.forward(request, response);
             } else {
-                // ƒf[ƒ^ƒx[ƒX‚ğXV
                 em.getTransaction().begin();
                 em.getTransaction().commit();
-                request.getSession().setAttribute("flush", "XV‚ªŠ®—¹‚µ‚Ü‚µ‚½B");
+                request.getSession().setAttribute("flush", "æ›´æ–°ãŒå®Œäº†ã—ã¾ã—ãŸã€‚");
                 em.close();
 
-                // ƒZƒbƒVƒ‡ƒ“ƒXƒR[ƒvã‚Ì•s—v‚É‚È‚Á‚½ƒf[ƒ^‚ğíœ
                 request.getSession().removeAttribute("message_id");
 
-                // indexƒy[ƒW‚ÖƒŠƒ_ƒCƒŒƒNƒg
                 response.sendRedirect(request.getContextPath() + "/index");
             }
         }

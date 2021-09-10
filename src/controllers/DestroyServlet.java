@@ -35,19 +35,16 @@ public class DestroyServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            // ƒZƒbƒVƒ‡ƒ“ƒXƒR[ƒv‚©‚çƒ^ƒXƒN‚ÌID‚ğæ“¾‚µ‚ÄŠY“–‚ÌID‚ÌƒƒbƒZ[ƒW1Œ‚Ì‚İ‚ğƒf[ƒ^ƒx[ƒX‚©‚çæ“¾
             Tasks m = em.find(Tasks.class, (Integer)(request.getSession().getAttribute("tasks_id")));
 
             em.getTransaction().begin();
-            em.remove(m);       // ƒf[ƒ^íœ
+            em.remove(m);
             em.getTransaction().commit();
-            request.getSession().setAttribute("flush", "íœ‚ªŠ®—¹‚µ‚Ü‚µ‚½B");
+            request.getSession().setAttribute("flush", "å‰Šé™¤ãŒå®Œäº†ã—ã¾ã—ãŸã€‚");
             em.close();
 
-            // ƒZƒbƒVƒ‡ƒ“ƒXƒR[ƒvã‚Ì•s—v‚É‚È‚Á‚½ƒf[ƒ^‚ğíœ
             request.getSession().removeAttribute("tasks_id");
 
-            // indexƒy[ƒW‚ÖƒŠƒ_ƒCƒŒƒNƒg
             response.sendRedirect(request.getContextPath() + "/index");
         }
     }
