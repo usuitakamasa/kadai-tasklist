@@ -48,6 +48,7 @@ public class CreateServlet extends HttpServlet {
 
             em.persist(m);
             em.getTransaction().commit();
+            request.getSession().setAttribute("flush", "“o˜^‚ªŠ®—¹‚µ‚Ü‚µ‚½B");
             em.close();
 
             response.sendRedirect(request.getContextPath() + "/index");
